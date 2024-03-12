@@ -1,4 +1,6 @@
-﻿public class Nodo
+﻿#region LinkedList
+
+public class Nodo
 {
     public int Dato { get; set; }
     public Nodo Successivo { get; set; }
@@ -149,11 +151,49 @@ public class ListaCollegata
     }
 }
 
+#endregion
+
+public class PilaInteri
+{
+    private LinkedList<int> _pila;
+
+    public LinkedList<int> Pila
+    {
+        get => _pila;
+        set => _pila = value;
+    }
+
+    public PilaInteri()
+    {
+        Pila = new();
+    }
+
+    // lifo - last in first out
+    public void Push(int value)
+    {
+        Pila.AddLast(value);
+    }
+
+    public bool Pop()
+    {
+        if (Pila.Count == 0)
+        {
+            return false; // pila vuota
+        }
+
+        Pila.RemoveLast();
+
+        return true;
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        ListaCollegata lista = new ListaCollegata();
+        #region TestLinkedList
+
+        ListaCollegata lista = new();
 
         lista.InserisciInTesta(3);
         lista.InserisciInTesta(2);
@@ -173,5 +213,17 @@ class Program
 
         lista.CancellaAlCentro(2);
         Console.WriteLine(lista);
+
+        #endregion
+
+        Console.Clear();
+
+        #region TestPilaInteri
+
+
+
+        #endregion
+
+        Console.Clear();
     }
 }
