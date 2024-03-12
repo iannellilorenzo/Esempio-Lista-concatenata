@@ -1,5 +1,7 @@
 ﻿#region LinkedList
 
+using System.Reflection.Metadata.Ecma335;
+
 public class Nodo
 {
     public int Dato { get; set; }
@@ -153,6 +155,8 @@ public class ListaCollegata
 
 #endregion
 
+#region PilaInteri
+
 public class PilaInteri
 {
     private LinkedList<int> _pila;
@@ -198,6 +202,84 @@ public class PilaInteri
         return str;
     }
 }
+
+#endregion
+
+#region CodaPrenotazioni
+
+public class NodoCoda
+{
+    private int _numeroPersone;
+    private string _nomePreno;
+
+    public int NumeroPersone
+    {
+        get => _numeroPersone;
+        set => _numeroPersone = value;
+    }
+
+    public string NomePreno
+    {
+        get => _nomePreno;
+        set => _nomePreno = value;
+    }
+
+    public NodoCoda(int num, string nome)
+    {
+        NumeroPersone = num;
+        NomePreno = nome;
+    }
+
+    public override string ToString()
+    {
+        return $"Nome prenotazione: {NomePreno}; Numero persone: {NumeroPersone}\n";
+    }
+}
+
+public class Coda
+{
+    private LinkedList<NodoCoda> _prenotazioni;
+
+    public LinkedList<NodoCoda> Prenotazioni
+    {
+        get => _prenotazioni;
+        set => _prenotazioni = value;
+    }
+
+    public Coda()
+    {
+        Prenotazioni = new();
+    }
+
+    public void Aggiungi(int numPer, string nome)
+    {
+        NodoCoda nuovaPrenot = new(numPer, nome);
+        Prenotazioni.AddLast(nuovaPrenot);
+    }
+
+    public bool Rimuovi()
+    {
+        if (Prenotazioni.Count == 0)
+        {
+            return false; // linkedlist vuota
+        }
+
+        Prenotazioni.RemoveFirst();
+        return true;
+    }
+
+    public override string ToString()
+    {
+        string str = "";
+        foreach(NodoCoda item in Prenotazioni)
+        {
+            str += item.ToString();
+        }
+        return str;
+    }
+}
+
+#endregion
 
 class Program
 {
@@ -249,6 +331,32 @@ class Program
 
         #endregion
 
-        //Console.Clear();
+        Console.Clear();
+
+        #region TestCodaPrenotazioni
+
+        Coda prenot = new();
+        string param = "test";
+        
+        for (int i = 0; i < 10; i++)
+        {
+            prenot.Aggiungi(i + rng.Next(0, 100), param + i);
+        }
+
+        Console.WriteLine("Prenotazioni non gestite:");
+        Console.WriteLine(prenot);
+        
+
+        Console.WriteLine("Prenotazioni dopo averne gestite qualcuna (casuale):");
+        for (int i = 0; i < rng.Next(1, 11); i++)
+        {
+            if (!prenot.Rimuovi())
+            {
+                Console.WriteLine("Errore");
+            }
+        }
+        Console.WriteLine(prenot);
+
+        #endregion
     }
 }
