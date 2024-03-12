@@ -185,6 +185,18 @@ public class PilaInteri
 
         return true;
     }
+
+    public override string ToString()
+    {
+        string str = "";
+
+        foreach(int item in Pila)
+        {
+            str += $"Valore: {item}\n";
+        }
+
+        return str;
+    }
 }
 
 class Program
@@ -220,10 +232,23 @@ class Program
 
         #region TestPilaInteri
 
+        PilaInteri stack = new();
+        Random rng = new();
 
+        Console.WriteLine("Valori pushati (casuali):");
+        for (int i = 0; i < 10; i++)
+        {
+            stack.Push(i + rng.Next(0, 101));
+        }
+        Console.WriteLine(stack.ToString());
+
+        stack.Pop();
+
+        Console.WriteLine("Valori post-pop:");
+        Console.WriteLine(stack.ToString());
 
         #endregion
 
-        Console.Clear();
+        //Console.Clear();
     }
 }
